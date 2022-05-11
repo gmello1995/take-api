@@ -1,16 +1,29 @@
 async function tempo(request, response) {
     const apiSecret = process.env.CONVERTKIT_API_SECRET;
-    const dynamicDate = new Date();
 
-    const subscribersResponse = await fetch(`https://api.convertkit.com/v3/subscribers?api_secret=${apiSecret}`);
-    const subscribersResponseJson = await subscribersResponse.json();
-    const inscritos = subscribersResponseJson.total_subscribers;
+    const gitResponse = await fetch(`https://api.github.com/users/takenet`);
+    const gitResponseJson = await gitResponse.json();
+    const avatar = gitResponseJson.avatar_url;
+
+    var repositoriesResponse = await fetch(`https://api.github.com/orgs/takenet/repos`);
+    var repositoriesResponseJson = await repositoriesResponse.json();
+    var repos = repositoriesResponseJson.filter(function(repositorio){
+        var lingua = repositorio.language;
+        return lingua === "C#"
+    }).sort(function(a,b){
+        var dataUm = new Date(a.created_at);
+        var dataDois = new Date(b.created_at);
+
+        return dataUm.getTime() - dataDois.getTime();
+    }).slice(0, 5);
+
 
     response.setHeader('Cache-Control', 's-maxage=10, stale-while-revalidate');
 
     response.json({
-        date: dynamicDate.toGMTString(),
-        inscritos: inscritos
+        avatar: avatar,
+        repos: repos
+
     });
 }
 
