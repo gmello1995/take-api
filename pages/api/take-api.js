@@ -1,9 +1,4 @@
 async function tempo(request, response) {
-    const apiSecret = process.env.CONVERTKIT_API_SECRET;
-
-    const gitResponse = await fetch(`https://api.github.com/users/takenet`);
-    const gitResponseJson = await gitResponse.json();
-    const avatar = gitResponseJson.avatar_url;
 
     var repositoriesResponse = await fetch(`https://api.github.com/orgs/takenet/repos`);
     var repositoriesResponseJson = await repositoriesResponse.json();
@@ -21,7 +16,6 @@ async function tempo(request, response) {
     response.setHeader('Cache-Control', 's-maxage=10, stale-while-revalidate');
 
     response.json({
-        avatar: avatar,
         repos: repos
 
     });
