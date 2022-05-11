@@ -14,7 +14,7 @@ async function tempo(request, response) {
     
     response.json({
         avatar: repos[0].owner.avatar_url,
-        repos1: repos[0],
+        repos0: repos[0],
         repos1: repos[1],
         repos2: repos[2],
         repos3: repos[3],
