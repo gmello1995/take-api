@@ -11,13 +11,14 @@ async function tempo(request, response) {
 
         return dataUm.getTime() - dataDois.getTime();
     }).slice(0, 5);
-
-
-    response.setHeader('Cache-Control', 's-maxage=10, stale-while-revalidate');
-
+    
     response.json({
-        repos: repos
-
+        avatar: repos[0].owner.avatar_url,
+        repos1: repos[0],
+        repos1: repos[1],
+        repos2: repos[2],
+        repos3: repos[3],
+        repos4: repos[4],
     });
 }
 
